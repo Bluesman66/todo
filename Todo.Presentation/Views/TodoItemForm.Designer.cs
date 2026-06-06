@@ -1,4 +1,4 @@
-namespace Todo.Presentation.Forms;
+namespace Todo.Presentation.Views;
 
 partial class TodoItemForm
 {

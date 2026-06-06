@@ -1,15 +1,11 @@
 ﻿namespace Todo.Presentation;
-
 using System.IO;
 using System.Windows.Forms;
-
 using Microsoft.Extensions.DependencyInjection;
-
 using Todo.Application;
 using Todo.Infrastructure;
 using Todo.Infrastructure.Common.Persistence;
-using Todo.Presentation.Forms;
-
+using Todo.Presentation.Views;
 static class Program
 {
     [STAThread]
@@ -22,11 +18,9 @@ static class Program
 
         services.AddApplication();
         services.AddInfrastructure(connectionString);
-        services.AddTransient<MainForm>();
-        services.AddTransient<TodoItemForm>();
+        services.AddPresentation();
 
         var provider = services.BuildServiceProvider();
-
         provider.GetRequiredService<DbInitializer>().Initialize();
 
         Application.EnableVisualStyles();
@@ -34,5 +28,3 @@ static class Program
         Application.Run(provider.GetRequiredService<MainForm>());
     }
 }
-
-

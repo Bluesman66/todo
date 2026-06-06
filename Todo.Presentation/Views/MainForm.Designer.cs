@@ -1,4 +1,4 @@
-namespace Todo.Presentation.Forms;
+namespace Todo.Presentation.Views;
 
 partial class MainForm
 {
@@ -49,7 +49,6 @@ partial class MainForm
         ((System.ComponentModel.ISupportInitialize)todoItemsGrid).BeginInit();
         SuspendLayout();
 
-        // mainLayout
         mainLayout.ColumnCount = 1;
         mainLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
         mainLayout.Controls.Add(filterLayout, 0, 0);
@@ -62,7 +61,6 @@ partial class MainForm
         mainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
         mainLayout.RowStyles.Add(new RowStyle(SizeType.AutoSize));
 
-        // filterLayout
         filterLayout.AutoSize = true;
         filterLayout.ColumnCount = 6;
         filterLayout.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
@@ -90,7 +88,7 @@ partial class MainForm
         categoryFilterComboBox.Dock = DockStyle.Fill;
         categoryFilterComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         categoryFilterComboBox.Margin = new Padding(0, 3, 8, 0);
-        categoryFilterComboBox.SelectedIndexChanged += FilterChanged;
+        categoryFilterComboBox.SelectedIndexChanged += FilterChangedHandler;
 
         statusFilterLabel.Anchor = AnchorStyles.Left;
         statusFilterLabel.AutoSize = true;
@@ -101,14 +99,13 @@ partial class MainForm
         statusFilterComboBox.Dock = DockStyle.Fill;
         statusFilterComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
         statusFilterComboBox.Margin = new Padding(0, 3, 8, 0);
-        statusFilterComboBox.SelectedIndexChanged += FilterChanged;
+        statusFilterComboBox.SelectedIndexChanged += FilterChangedHandler;
 
         refreshButton.AutoSize = true;
         refreshButton.Margin = new Padding(0, 2, 0, 0);
         refreshButton.Text = "Обновить";
         refreshButton.Click += RefreshButton_Click;
 
-        // todoItemsGrid
         todoItemsGrid.AllowUserToAddRows = false;
         todoItemsGrid.AllowUserToDeleteRows = false;
         todoItemsGrid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -119,7 +116,6 @@ partial class MainForm
         todoItemsGrid.ReadOnly = true;
         todoItemsGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-        // buttonPanel
         buttonPanel.AutoSize = true;
         buttonPanel.Controls.Add(addButton);
         buttonPanel.Controls.Add(editButton);
