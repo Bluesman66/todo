@@ -16,6 +16,10 @@ partial class MainForm
     private ComboBox statusFilterComboBox;
     private Label categoryFilterLabel;
     private Label statusFilterLabel;
+    private ContextMenuStrip todoItemsContextMenu;
+    private ToolStripMenuItem editMenuItem;
+    private ToolStripMenuItem deleteMenuItem;
+    private ToolStripMenuItem changeStatusMenuItem;
 
     protected override void Dispose(bool disposing)
     {
@@ -43,6 +47,10 @@ partial class MainForm
         statusFilterComboBox = new ComboBox();
         categoryFilterLabel = new Label();
         statusFilterLabel = new Label();
+        todoItemsContextMenu = new ContextMenuStrip(components);
+        editMenuItem = new ToolStripMenuItem();
+        deleteMenuItem = new ToolStripMenuItem();
+        changeStatusMenuItem = new ToolStripMenuItem();
         mainLayout.SuspendLayout();
         filterLayout.SuspendLayout();
         buttonPanel.SuspendLayout();
@@ -115,6 +123,25 @@ partial class MainForm
         todoItemsGrid.MultiSelect = false;
         todoItemsGrid.ReadOnly = true;
         todoItemsGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        todoItemsGrid.ContextMenuStrip = todoItemsContextMenu;
+        todoItemsGrid.CellMouseDown += TodoItemsGrid_CellMouseDown;
+
+        todoItemsContextMenu.Items.AddRange(new ToolStripItem[]
+        {
+            editMenuItem,
+            deleteMenuItem,
+            changeStatusMenuItem
+        });
+        todoItemsContextMenu.Opening += TodoItemsContextMenu_Opening;
+
+        editMenuItem.Text = "Редактировать";
+        editMenuItem.Click += EditButton_Click;
+
+        deleteMenuItem.Text = "Удалить";
+        deleteMenuItem.Click += DeleteButton_Click;
+
+        changeStatusMenuItem.Text = "Сменить статус";
+        changeStatusMenuItem.Click += ChangeStatusButton_Click;
 
         buttonPanel.AutoSize = true;
         buttonPanel.Controls.Add(addButton);

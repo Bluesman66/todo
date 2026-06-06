@@ -132,7 +132,8 @@ public partial class MainForm : Form, IMainView
 
     public TodoItemStatus? ShowStatusChangeDialog()
     {
-        using var dialog = new StatusChangeForm();
+        using var scope = _scopeFactory.CreateScope();
+        var dialog = scope.ServiceProvider.GetRequiredService<StatusChangeForm>();
         return dialog.ShowDialog(this) == DialogResult.OK ? dialog.SelectedStatus : null;
     }
 
@@ -160,6 +161,28 @@ public partial class MainForm : Form, IMainView
 
     private void ChangeStatusButton_Click(object sender, EventArgs e) =>
         ChangeStatusRequested?.Invoke(this, EventArgs.Empty);
+
+    private void TodoItemsGrid_CellMouseDown(object? sender, DataGridViewCellMouseEventArgs e)
+    {
+        if (e.Button != MouseButtons.Right || e.RowIndex < 0)
+        {
+            return;
+        }
+
+        todoItemsGrid.ClearSelection();
+        todoItemsGrid.Rows[e.RowIndex].Selected = true;
+        todoItemsGrid.CurrentCell = todoItemsGrid.Rows[e.RowIndex].Cells[Math.Max(e.ColumnIndex, 0)];
+    }
+
+    private void TodoItemsContextMenu_Opening(object? sender, System.ComponentModel.CancelEventArgs e)
+    {
+        var hasSelection = GetSelectedTodoItem() is not null;
+        var actionsEnabled = editButton.Enabled;
+
+        editMenuItem.Enabled = hasSelection && actionsEnabled;
+        deleteMenuItem.Enabled = hasSelection && actionsEnabled;
+        changeStatusMenuItem.Enabled = hasSelection && actionsEnabled;
+    }
 
     private void SetFilterIndexSilently(ComboBox comboBox, int index)
     {

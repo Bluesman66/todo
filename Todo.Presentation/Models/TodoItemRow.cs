@@ -1,14 +1,27 @@
 namespace Todo.Presentation.Models;
 
+using System.ComponentModel;
+
 using Todo.Domain.TodoItems;
 
 public class TodoItemRow
 {
+    [Browsable(false)]
     public Guid Id { get; }
+
+    [DisplayName("Название")]
     public string Title { get; }
+
+    [DisplayName("Категория")]
     public string CategoryName { get; }
+
+    [DisplayName("Приоритет")]
     public string Priority { get; }
+
+    [DisplayName("Срок")]
     public string DueDate { get; }
+
+    [DisplayName("Статус")]
     public string Status { get; }
 
     public TodoItemRow(
